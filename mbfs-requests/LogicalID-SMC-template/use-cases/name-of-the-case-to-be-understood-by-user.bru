@@ -1,0 +1,43 @@
+meta {
+  name: name-of-the-case-to-be-understood-by-user
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/vehicles-external/v2/losses/adjuster-login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "adjuster": {
+      "isDefaultAccess": true
+    }
+  }
+}
+
+script:post-response {
+  
+  
+}
+
+tests {
+  shouldReturnStatus(200)
+  
+  assertPropertyExists('data[0].accessToken')
+  
+}
+
+docs {
+  # Case description
+  
+  Create a token to be used as a header in consequent calls th AMIS API.
+  
+  ## conditions
+  
+  when property *isDefaultAccess* is set to _true_ then the values stored in the properties are used to call the backend.
+  
+  
+}

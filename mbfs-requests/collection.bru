@@ -1,0 +1,37 @@
+headers {
+  tsec: {{tsec}}
+}
+
+tests {
+  /***********************************
+  * ON SUCCESS EXPECT 
+  *************************************/
+  
+  function shouldReturnStatus(expectedStatus){
+    test(`should return a status ${expectedStatus}`, function() {
+     expect(res.getStatus()).to.equal(expectedStatus);
+    })
+  }
+  
+  function assertPropertyExists(expectedProperty){
+    test(`response should have property ${expectedProperty}`, function(){
+      expect(res(expectedProperty)).to.exist
+    })
+  }
+  
+  /***********************************
+  * ON ERROR EXPECT 
+  *************************************/
+  
+  function onErrorShouldReturnCode(expectedCode){
+    test(`should return code ${expectedCode}`, function(){
+      expect(res("messages[0].code")).to.equal(expectedCode)
+    })
+  }
+  
+  function onErrorShouldReturnMessage(expectedMessage){
+    test(`should return a message like ${expectedMessage}`, function(){
+      expect(res('messages[0].message')).to.equal(expectedMessage)
+    })
+  }
+}
