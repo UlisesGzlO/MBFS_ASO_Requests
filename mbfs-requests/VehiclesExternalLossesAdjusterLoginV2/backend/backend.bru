@@ -1,0 +1,17 @@
+meta {
+  name: backend
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://iam.amis.com.mx/auth/realms/AMIS/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: inherit
+}
+
+body:form-urlencoded {
+  grant_type: client_credentials
+  client_secret: 7db01dbd-7925-4916-8fbd-826c79fd3557
+  client_id: SU_BBVA
+}

@@ -1,0 +1,37 @@
+meta {
+  name: thirdPartyAuthenticationFailed
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/vehicles-external/v2/losses/adjuster-login
+  body: json
+  auth: none
+}
+
+headers {
+  tsec: {{tsec}}
+}
+
+body:json {
+  {
+    "adjuster": {
+      "isDefaultAccess": false,
+      "accessDetail": {
+        "customerId": "alfredoX.lazcano@bbva.com",
+        "accessData": {
+          "accessDetailType": "CLIENT_CREDENTIALS",
+          "secretId": "${secret}"
+        }
+      }
+    }
+  }
+}
+
+tests {
+  shouldReturnStatus(400)
+  
+  assertPropertyExists('messages[0].code')
+  
+}

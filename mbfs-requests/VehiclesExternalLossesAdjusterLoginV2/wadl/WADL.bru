@@ -1,0 +1,19 @@
+meta {
+  name: WADL
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{url}}/vehicles-external/v2/losses/adjuster-login/?_wadl
+  body: json
+  auth: none
+}
+
+params:query {
+  _wadl: 
+}
+
+tests {
+  shouldReturnStatus(200)
+}

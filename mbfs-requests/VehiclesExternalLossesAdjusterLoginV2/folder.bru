@@ -1,0 +1,51 @@
+meta {
+  name: VehiclesExternalLossesAdjusterLoginV2
+  seq: 4
+}
+
+script:pre-request {
+  /*
+  validate service is deployed
+  try getting the WADL
+  */
+  bru.runRequest("/WADL")
+}
+
+script:post-response {
+  switch(res.getStatus()){
+    case 200:
+      const amisToken = res('data[0].accessToken')
+      
+      bru.setEnvVar('amis-token', amisToken ? amisToken : "")
+     
+    break
+    case 400:
+       console.log("please provide a valid Tsec")
+  
+      break
+    case 401:
+      console.log("the tsec has expired, please provide a valid Tsec")
+      bru.setGlobalEnvVar("tsec", "")
+      break
+    case 403:
+      console.log("please provide a Tsec from the same Environment")
+      break;
+    case 503:
+      console.log("an aso server restart may be in progress, please try later")
+      break;
+    default:
+      console.log("unknown error: could not get a token from AMIS")
+      console.log("AdjusterLogin ConsumerRequestId: " + res.getHeader("consumerrequestid"))
+  
+    break
+  }
+  
+}
+
+docs {
+  # developer console link
+  
+  https://console.platform.bbva.com/app/MBFS/715087/MEX/715089/ns/central/mx.mbfs.app-id-715087.dsg/aso.link/VehiclesExternalLossesAdjusterLoginV2
+  
+  
+}
